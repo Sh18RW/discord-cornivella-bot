@@ -1,0 +1,1 @@
+It's my simple Discord bot for moderation server.
