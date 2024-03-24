@@ -1,34 +1,24 @@
 package ru.cornivella.discord;
 
-import java.io.IOException;
-import java.util.List;
 
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
-import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.requests.GatewayIntent;
+import java.io.IOException;
+
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import ru.cornivella.discord.commands.math.MathCosAdapter;
+import ru.cornivella.discord.tools.Bot;
 import ru.cornivella.discord.utils.Configuration;
 
 public class App {
-    public static void main(String[] args) {
-        try {
-            Configuration.init();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Can't continue!");
-            System.exit(-1);
-        }
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Configuration.init();
+        
+        Bot.getInstance().addListener(new MathCosAdapter());
+        Bot.startBot();
 
-        Bot bot = new Bot();
-
-        JDABuilder.createLight(Configuration.getProperty("bot.token"))
-            .addEventListeners(bot)
-            .enableIntents(List.of(
-                GatewayIntent.GUILD_MESSAGES,
-                GatewayIntent.MESSAGE_CONTENT
-            ))
-            .setStatus(OnlineStatus.ONLINE)
-            .setActivity(Activity.watching("messages"))
-            .build();
+        Bot.getInstance().addGuildCommands(
+            Commands.slash("cos", "Get cos by radian")
+                .addOption(OptionType.NUMBER, "radians", "The radian value.", true)
+        );
     }
 }
