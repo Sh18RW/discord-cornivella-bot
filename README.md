@@ -1,1 +1,1 @@
-It's my simple Discord bot for moderation server.
+It's my simple Discord bot. Has some useful or just funny commands as cos, sin and etc. Nothing really necessary.
