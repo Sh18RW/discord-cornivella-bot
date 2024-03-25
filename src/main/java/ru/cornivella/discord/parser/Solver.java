@@ -70,9 +70,9 @@ public class Solver {
                         }
                     }
                     case Close -> {
-                        if (waitForNumber) {
-                            throw new ArithmeticSolveErrorException("Wait for number, but got ')'");
-                        }
+                        // if (waitForNumber) {
+                        //     throw new ArithmeticSolveErrorException("Wait for number, but got ')'");
+                        // }
                         break MASTER_LOOP;
                     }
                     default -> {
