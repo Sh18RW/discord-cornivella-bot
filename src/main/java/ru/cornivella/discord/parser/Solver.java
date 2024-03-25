@@ -32,6 +32,7 @@ public class Solver {
         boolean isNegative = false;
         boolean waitForNumber = true;
         boolean firstWriting = true;
+        boolean hasValue = false;
 
         MASTER_LOOP:
         for (; index < tokenList.size();index++) {
@@ -59,7 +60,7 @@ public class Solver {
                             }
                         } else if (operationType == OperationType.Minus) {
                             currentNumber -= solverState.value();
-                        } else if (operationType == OperationType.Plus) {
+                        } else if (operationType == OperationType.None || operationType == OperationType.Plus) {
                             currentNumber += solverState.value();
                         }
                     }
