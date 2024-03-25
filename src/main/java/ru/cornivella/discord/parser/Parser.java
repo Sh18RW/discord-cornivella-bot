@@ -148,6 +148,7 @@ public class Parser {
         private ParenthesisToken parseParenthesis() throws ArithmeticParsingErrorException {
             String value = currentTypeValue.toString();
             currentTypeValue = new StringBuilder();
+            readingType = Token.Type.Number;
             switch (value) {
                 case "(" -> {
                     readingType = Token.Type.Number;
@@ -162,5 +163,8 @@ public class Parser {
                 }
             }
         }
+    }
+
+    public static final record ParsingResult(String expression, List<Token> tokenList) {
     }
 }

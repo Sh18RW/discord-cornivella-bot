@@ -32,7 +32,6 @@ public class Solver {
         boolean isNegative = false;
         boolean waitForNumber = true;
         boolean firstWriting = true;
-        boolean hasValue = false;
 
         MASTER_LOOP:
         for (; index < tokenList.size();index++) {
@@ -43,6 +42,9 @@ public class Solver {
                 
                 switch (parenthesisToken.getValue()) {
                     case Open -> {
+                        if (!waitForNumber)
+                            priorityType = OperationType.Multiply;
+                        
                         SolverState solverState = iteration(tokenList, index+1);
                         index = solverState.index();
 
@@ -56,7 +58,10 @@ public class Solver {
                             if (priorityType == OperationType.Multiply) {
                                 currentNumber *= solverState.value();
                             } else if (priorityType == OperationType.Divide) {
-                                currentNumber /= solverState.value();
+                                double divider = solverState.value();
+                                if (divider == 0)
+                                    throw new ArithmeticSolveErrorException("Divide by zero");
+                                currentNumber /= divider;
                             }
                         } else if (operationType == OperationType.Minus) {
                             currentNumber -= solverState.value();
@@ -65,6 +70,9 @@ public class Solver {
                         }
                     }
                     case Close -> {
+                        if (waitForNumber) {
+                            throw new ArithmeticSolveErrorException("Wait for number, but got ')'");
+                        }
                         break MASTER_LOOP;
                     }
                     default -> {
@@ -105,7 +113,10 @@ public class Solver {
 
                 if (priorityType != OperationType.None) {
                     if (priorityType == OperationType.Divide) {
-                        currentNumber /= numberToken.getValue() * mul;
+                        double divider = numberToken.getValue();
+                        if (divider == 0)
+                            throw new ArithmeticSolveErrorException("Divide by zero");
+                        currentNumber /= divider * mul;
                     } else if (priorityType == OperationType.Multiply) {
                         currentNumber *= numberToken.getValue()* mul;
                     }
@@ -115,10 +126,6 @@ public class Solver {
                     currentNumber += numberToken.getValue() * mul;
                 }else if (operationType == OperationType.Minus) {
                     currentNumber = numberToken.getValue() * -1 * mul;
-                } else if (operationType == OperationType.Divide) {
-                    currentNumber /= numberToken.getValue() * mul;
-                } else if (operationType == OperationType.Multiply) {
-                    currentNumber *= numberToken.getValue()* mul;
                 }
 
                 waitForNumber = false;
@@ -137,6 +144,9 @@ public class Solver {
             } else if (operationType == OperationType.Plus || operationType == OperationType.Minus) {
                 result += currentNumber * mul;
             } else if (operationType == OperationType.Divide) {
+                if (currentNumber == 0) {
+                    throw new ArithmeticSolveErrorException("Divide by zero.");
+                }
                 result /= currentNumber * mul;
             } else if (operationType == OperationType.Multiply) {
                 result *= currentNumber * mul;
@@ -147,5 +157,9 @@ public class Solver {
     }
 
     private record SolverState(int index, double value) {
+    }
+
+
+    public final record SolveResult(String expression, double result) {
     }
 }
