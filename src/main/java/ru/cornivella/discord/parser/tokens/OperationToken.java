@@ -11,6 +11,8 @@ public class OperationToken extends Token<OperationType> {
         Plus,
         Minus,
         Multiply,
-        Divide
+        Divide,
+
+        None
     }
 }
