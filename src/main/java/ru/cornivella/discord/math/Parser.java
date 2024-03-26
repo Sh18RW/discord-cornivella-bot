@@ -82,14 +82,15 @@ public class Parser {
                 readingType = Token.Type.Number;
                 currentTypeValue.append(ch);
             } else if (operationSet.contains(ch)) {
-                if (readingType != Token.Type.Operation) {
+                if (currentTypeValue.length() != 0 && readingType != Token.Type.Operation) {
                     parseNext();
                 }
 
                 readingType = Token.Type.Operation;
                 currentTypeValue.append(ch);
             } else if (parenthesisSet.contains(ch)) {
-                parseNext();
+                if (currentTypeValue.length() != 0)
+                    parseNext();
                 readingType = Token.Type.Parenthesis;
                 currentTypeValue.append(ch);
             }

@@ -87,12 +87,13 @@ public class Solver {
                     case Minus:
                         if (waitForNumber && operationToken.getValue() == OperationType.Minus) {
                             isNegative = !isNegative;
+                        } else {
+                            firstWriting = false;
+                            result += currentNumber;
+                            currentNumber = 0;
+                            priorityType = OperationType.None;
+                            operationType = operationToken.getValue();
                         }
-                        result += currentNumber;
-                        firstWriting = false;
-                        currentNumber = 0;
-                        priorityType = OperationType.None;
-                        operationType = operationToken.getValue();
                         break;
                     case Multiply:
                     case Divide:
@@ -125,7 +126,7 @@ public class Solver {
                 } else if (operationType == OperationType.Plus) {
                     currentNumber += numberToken.getValue() * mul;
                 }else if (operationType == OperationType.Minus) {
-                    currentNumber = numberToken.getValue() * -1 * mul;
+                    currentNumber += numberToken.getValue() * -1 * mul;
                 }
 
                 waitForNumber = false;
