@@ -2,8 +2,8 @@ package ru.cornivella.discord.commands.math;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import ru.cornivella.discord.parser.ArithmeticErrorException;
-import ru.cornivella.discord.parser.Solver;
+import ru.cornivella.discord.math.ArithmeticErrorException;
+import ru.cornivella.discord.math.Solver;
 
 public class MathSolveAdapter extends ListenerAdapter {
     @Override

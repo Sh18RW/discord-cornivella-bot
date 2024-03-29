@@ -1,7 +1,8 @@
-package ru.cornivella.discord.parser.parser;
+package ru.cornivella.discord.math.parser;
 
-import ru.cornivella.discord.parser.ArithmeticErrorException;
-import ru.cornivella.discord.parser.ArithmeticSolveErrorException;
+import ru.cornivella.discord.math.ArithmeticErrorException;
+import ru.cornivella.discord.math.ArithmeticSolveErrorException;
+import ru.cornivella.discord.math.parser.tokens.TokenType;
 
 public class OperationExpression extends Expression {
     private final Expression left;
@@ -9,7 +10,7 @@ public class OperationExpression extends Expression {
     private final OperationType operation;
 
     public OperationExpression(Expression left, Expression right, OperationType operation, String meta) {
-        super(meta);
+        super(meta, TokenType.Operation);
         this.left = left;
         this.right = right;
         this.operation = operation;
