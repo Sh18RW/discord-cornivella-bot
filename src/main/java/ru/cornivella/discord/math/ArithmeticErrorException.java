@@ -1,4 +1,4 @@
-package ru.cornivella.discord.math;
+package ru.cornivella.discord.parser;
 
 public class ArithmeticErrorException extends Exception {
     public ArithmeticErrorException(String reason) {

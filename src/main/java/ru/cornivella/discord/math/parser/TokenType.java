@@ -1,4 +1,4 @@
-package ru.cornivella.discord.math.parser.tokens;
+package ru.cornivella.discord.parser.parser;
 
 public enum TokenType {
     Number,

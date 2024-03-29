@@ -1,13 +1,11 @@
-package ru.cornivella.discord.math.parser;
-
-import ru.cornivella.discord.math.parser.tokens.TokenType;
+package ru.cornivella.discord.parser.parser;
 
 public class NumberExpression extends Expression {
 
     private final double value;
 
     public NumberExpression(double value, String meta) {
-        super(meta, TokenType.Number);
+        super(meta);
         this.value = value;
     }
 
