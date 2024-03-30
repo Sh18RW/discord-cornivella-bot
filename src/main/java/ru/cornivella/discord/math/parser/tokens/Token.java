@@ -28,4 +28,13 @@ public abstract class Token<T> {
     public String toString() {
         return "[Token:" + type + "," + value + "]";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Token) {
+            Token token = (Token) obj;
+            return token.value.equals(value);
+        }
+        return false;
+    }
 }

@@ -4,7 +4,7 @@ import ru.cornivella.discord.math.ArithmeticParsingErrorException;
 
 public class NumberToken extends Token<Double> {
 
-    protected NumberToken(double value, String meta) {
+    public NumberToken(double value, String meta) {
         super(TokenType.Number, value, meta);
     }
 

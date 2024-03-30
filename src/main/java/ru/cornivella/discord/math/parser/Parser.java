@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import ru.cornivella.discord.math.ArithmeticParsingErrorException;
 import ru.cornivella.discord.math.parser.tokens.NumberToken;
 import ru.cornivella.discord.math.parser.tokens.OperatorToken;
+import ru.cornivella.discord.math.parser.tokens.OperatorType;
 import ru.cornivella.discord.math.parser.tokens.ParenthesisToken;
 import ru.cornivella.discord.math.parser.tokens.ParenthesisType;
 import ru.cornivella.discord.math.parser.tokens.Token;
@@ -17,17 +18,61 @@ import ru.cornivella.discord.math.parser.tokens.TokenType;
 public class Parser {
     private static final Logger logger = LogManager.getLogger(Parser.class);
 
+    // Egg
+    private static final List<Token> thousandMinus = List.of((Token) new NumberToken(1000, ""), (Token) new OperatorToken(OperatorType.Minus, ""), (Token) new NumberToken(7, ""));
+    private static final String thousandMinusText = """
+        У меня нет проблем, кроме моей башки
+        1000-7, я умер, прости
+        Этот ёбаный дождь нагоняет тоски
+        1000-7, я умер, прости
+        И им всем никогда меня не победить
+        1000-7, я уже погиб
+        
+        У меня есть суммы, но мне так пох
+        Не вывожу из сукиного рта, о-о-о
+        Я чувствую вкус крови на губах, сдох
+        Им никогда не победить меня (Никогда)
+        
+        Под её окном написал: «Ты шлюха»
+        Клонит спать, но только если под утро
+        Это мёртвый звук, на колени, сука
+        Я реально мёртвый, это не шутка
+        
+        У меня нет проблем, кроме моей башки
+        1000-7, я умер, прости
+        Этот ёбаный дождь нагоняет тоски
+        1000-7, я умер, прости
+        У меня нет проблем, кроме моей башки
+        1000-7, я умер, прости
+        Этот ёбаный дождь нагоняет тоски
+        1000-7, я умер, прости
+        
+        У меня есть суммы, но мне так пох
+        Не вывожу из сукиного рта, о-о-о
+        Я чувствую вкус крови на губах, сдох
+        Им никогда не победить меня (Никогда)
+        У меня есть суммы, но мне так пох
+        Не вывожу из сукиного рта, о-о-о
+        Я чувствую вкус крови на губах, сдох
+        Им никогда не победить меня (Никогда)
+            """;
+
     public static TokenTree parse(String expresstion) throws ArithmeticParsingErrorException {
         logger.debug("Try to parse '" + expresstion + "'.");
 
         ParserState parserState = new ParserState(expresstion);
         List<Token> tokenList = parserState.getTokenList();
+
+        if (tokenList.equals(thousandMinus)) {
+            throw new ArithmeticParsingErrorException(thousandMinusText);
+        }
+
         logger.debug("Tokens: " + tokenList);
         return TokenTree.makeTokenTree(tokenList);
     }
 
     private static final class ParserState {
-        private static final String numberSet = "0123456789.";
+        private static final String numberSet = "0123456789.E";
         private static final String operationSet = "-+*/^";
         private static final String functionSet = "qwertyuiopasdfghjklzxcvbnm";
 
@@ -54,7 +99,7 @@ public class Parser {
             // if equals to number, means that next token must be operation.
             // if equals to operation, means that next token must be number or parenthesis.
             // my English is very well :)
-            TokenType lastRodeType = TokenType.Parenthesis;
+            TokenType lastRodeType = TokenType.Operation;
             List<Token> tokenList = new LinkedList<>();
             int currentOpenedParenthesis = 0;
 

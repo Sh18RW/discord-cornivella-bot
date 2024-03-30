@@ -43,6 +43,7 @@ public class TokenTree {
         Expression lastExpression = null;
         OperatorToken lastOperatorToken = null;
         boolean expressionEnd = false;
+
         for (;index < tokenList.size();index++) {
             Token currentToken = tokenList.get(index);
             if (currentToken.getType() == TokenType.Parenthesis) {
@@ -78,17 +79,34 @@ public class TokenTree {
                     IterationState newState = iterate(tokenList, index + 1, TokenType.Function);
                     Expression newExpression = newState.getResult();
                     index = newState.getIndex();
+
+                    if (lastExpression == null) {
+                        lastExpression = result;
+                        result = null;
+                    }
                     lastExpression = new OperationExpression(lastExpression, newExpression, operatorType, operatorToken.getMeta(), false);
 
                     continue;
                 } else if (operatorType == OperatorType.Multiply || operatorType == OperatorType.Divide) {
-                    IterationState newState = iterate(tokenList, index + 1, TokenType.Operation);
-                    Expression newExpression = newState.getResult();
-                    index = newState.getIndex();
-                    lastExpression = new OperationExpression(lastExpression, newExpression, operatorType, operatorToken.getMeta(), false);
+                    if (until != TokenType.Operation) {
+                        IterationState newState = iterate(tokenList, index + 1, TokenType.Operation);
+                        Expression newExpression = newState.getResult();
+                        index = newState.getIndex();
 
-                    if ((until == TokenType.Operation || until == TokenType.Parenthesis) && newState.isExpressionEnd())
-                        break;
+                        if (lastExpression == null) {
+                            lastExpression = result;
+                            result = null;
+                        }
+
+                        lastExpression = new OperationExpression(lastExpression, newExpression, operatorType, operatorToken.getMeta(), false);
+                    } else {
+                        // swap types to correct working (I just don't want to rework TokenTree logic, sorry)
+                        if (operatorType == OperatorType.Divide) {
+                            operatorToken = new OperatorToken(OperatorType.Multiply, operatorToken.getMeta());
+                        } else {
+                            operatorToken = new OperatorToken(OperatorType.Divide, operatorToken.getMeta());
+                        }
+                    }
                 }
 
                 if (result == null) {
@@ -99,8 +117,7 @@ public class TokenTree {
 
                 lastExpression = null;
 
-                if (operatorType == OperatorType.Minus || operatorType == OperatorType.Plus)
-                    lastOperatorToken = operatorToken;
+                lastOperatorToken = operatorToken;
             } else {
                 throw new ArithmeticParsingErrorException("unknown " + currentToken + " token!", currentToken.getMeta());
             }
