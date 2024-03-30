@@ -3,4 +3,10 @@ target/
 src/main/resources/bot.properties
 
 .metadata/
+
 application-**.log
+.classpath
+.project
+.settings/
+
+dependency-reduced-pom.xml

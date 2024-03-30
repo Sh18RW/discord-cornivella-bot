@@ -50,7 +50,7 @@ public class Parser {
 
         /*
          * Parse next token.
-         * @param type contains type, which will be parsed. If it is not this type, throws exception.
+         * @param type contains token type, which will be parsed. If it is not this type, throws exception.
          */
         private final Token parseNextToken(TokenType type) throws ArithmeticParsingErrorException {
             String value = word.toString(); // get value to clear StringBuilder
