@@ -12,7 +12,6 @@ import ru.cornivella.discord.math.parser.tokens.OperatorToken;
 import ru.cornivella.discord.math.parser.tokens.ParenthesisToken;
 import ru.cornivella.discord.math.parser.tokens.ParenthesisType;
 import ru.cornivella.discord.math.parser.tokens.Token;
-import ru.cornivella.discord.math.parser.tokens.TokenTree;
 import ru.cornivella.discord.math.parser.tokens.TokenType;
 
 public class Parser {
@@ -24,11 +23,11 @@ public class Parser {
         ParserState parserState = new ParserState(expresstion);
         List<Token> tokenList = parserState.getTokenList();
         logger.debug("Tokens: " + tokenList);
-        return null;
+        return TokenTree.makeTokenTree(tokenList);
     }
 
     private static final class ParserState {
-        private static final String numberSet = "0123456789";
+        private static final String numberSet = "0123456789.";
         private static final String operationSet = "-+*/^";
         private static final String functionSet = "qwertyuiopasdfghjklzxcvbnm";
 

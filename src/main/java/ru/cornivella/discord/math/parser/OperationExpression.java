@@ -2,15 +2,16 @@ package ru.cornivella.discord.math.parser;
 
 import ru.cornivella.discord.math.ArithmeticErrorException;
 import ru.cornivella.discord.math.ArithmeticSolveErrorException;
+import ru.cornivella.discord.math.parser.tokens.OperatorType;
 import ru.cornivella.discord.math.parser.tokens.TokenType;
 
 public class OperationExpression extends Expression {
     private final Expression left;
     private final Expression right;
-    private final OperationType operation;
+    private final OperatorType operation;
 
-    public OperationExpression(Expression left, Expression right, OperationType operation, String meta) {
-        super(meta, TokenType.Operation);
+    public OperationExpression(Expression left, Expression right, OperatorType operation, String meta, boolean negative) {
+        super(meta, TokenType.Operation, negative);
         this.left = left;
         this.right = right;
         this.operation = operation;
@@ -18,29 +19,41 @@ public class OperationExpression extends Expression {
 
     @Override
     public double solve() throws ArithmeticErrorException {
+        double result = 0;
         switch (operation) {
             case Plus -> {
-                return left.solve() + right.solve();
+                result = left.solve() + right.solve();
             }
             case Minus -> {
-                return left.solve() - right.solve();
+                result = left.solve() - right.solve();
             }
             case Multiply -> {
-                return left.solve() * right.solve();
+                result = left.solve() * right.solve();
             }
             case Divide -> {
                 double rightValue = right.solve();
                 if (rightValue == 0) {
                     throw new ArithmeticSolveErrorException(meta, "dividion by zero!");
                 }
-                return left.solve() / rightValue;
+                result = left.solve() / rightValue;
             }
             case Degree -> {
-                return Math.pow(left.solve(), right.solve());
+                result = Math.pow(left.solve(), right.solve());
+            }
+            default -> {
+                throw new ArithmeticSolveErrorException(meta, "can't find " + operation + " operation!");
             }
         }
 
-        throw new ArithmeticSolveErrorException(meta, "can't find " + operation + " operation!");
+        if (negative)
+            result *= -1;
+        
+            return result;
+    }
+
+    @Override
+    public String toString() {
+        return "[OperationExpression:" + left.toString() + " [" + operation + "] " + right.toString() + "]";
     }
 
 }

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import ru.cornivella.discord.math.ArithmeticErrorException;
 import ru.cornivella.discord.math.parser.Parser;
-import ru.cornivella.discord.math.parser.tokens.TokenTree;
+import ru.cornivella.discord.math.parser.TokenTree;
 
 public class App {
     public static void main(String[] args) throws IOException, InterruptedException, ArithmeticErrorException {
@@ -22,7 +22,8 @@ public class App {
         //         .addOption(OptionType.STRING, "expression", "You can use numbers, + - * / with ( )!", true)
         // );
 
-        TokenTree value = Parser.parse("((2 + -(3 - -1) * (12 / 2) / 3 * 3)/(20 - 10))");
+        TokenTree value = Parser.parse("((((2^2^3^2/(2 + (2^6 - 2))) / (32 * 2))^(10 * 10))*10^2^2)^(1/2)*0.1*10");
         System.out.println(value);
+        System.out.println(value.getRoot().solve());
     }
 }
