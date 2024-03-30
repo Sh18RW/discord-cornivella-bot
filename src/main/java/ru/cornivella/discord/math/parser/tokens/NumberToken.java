@@ -8,13 +8,14 @@ public class NumberToken extends Token<Double> {
         super(TokenType.Number, value, meta);
     }
 
-    public static final NumberToken parse(String value, String meta) throws ArithmeticParsingErrorException {
+    public static final NumberToken parse(String value, String meta, boolean isNegative) throws ArithmeticParsingErrorException {
         try {
             double numberValue = Double.parseDouble(value.toString());
+            if (isNegative)
+                numberValue *= -1;
             return new NumberToken(numberValue, meta);
         } catch (Exception e) {
             throw new ArithmeticParsingErrorException("can't parse number value '" + value.toString() + '!', meta);
         }
     }
-
 }

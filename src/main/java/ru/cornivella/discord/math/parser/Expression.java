@@ -1,6 +1,7 @@
 package ru.cornivella.discord.math.parser;
 
 import ru.cornivella.discord.math.ArithmeticErrorException;
+import ru.cornivella.discord.math.parser.tokens.TokenType;
 
 public abstract class Expression {
     protected final String meta;

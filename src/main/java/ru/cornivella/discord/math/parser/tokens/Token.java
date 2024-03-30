@@ -22,4 +22,10 @@ public abstract class Token<T> {
     public final String getMeta() {
         return this.meta;
     }
+
+
+    @Override
+    public String toString() {
+        return "[Token:" + type + "," + value + "]";
+    }
 }
