@@ -36,7 +36,7 @@ public class TokenTree {
 
     /*
      * Make token tree expression. Recursion function.
-     * @param until uses to set until TokenType it will be iterate. If null, parse until end.
+     * @param until uses to set until TokenType it will be iterated. If null, parse until end.
      */
     private static final IterationState iterate(List<Token> tokenList, int index, TokenType until) throws ArithmeticParsingErrorException {
         Expression result = null;

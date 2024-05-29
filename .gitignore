@@ -10,3 +10,6 @@ application-**.log
 .settings/
 
 dependency-reduced-pom.xml
+
+# Mac OS
+.DS_Store
