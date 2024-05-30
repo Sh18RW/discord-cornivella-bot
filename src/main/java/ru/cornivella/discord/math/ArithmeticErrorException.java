@@ -1,7 +1,9 @@
 package ru.cornivella.discord.math;
 
-public class ArithmeticErrorException extends Exception {
-    public ArithmeticErrorException(String reason) {
-        super(reason);
+public class ArithmeticErrorException extends Exception
+{
+    public ArithmeticErrorException(String text)
+    {
+        super(text);
     }
 }
