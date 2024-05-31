@@ -33,7 +33,7 @@ public class Parser
     private StringBuilder currentWord; // reading word
     private ReadingType readingType; // currently reading type of word as number or parenthesis
     private int iterator; // current parser position
-    // End parses state
+    // End parser state
 
     public Parser(String expression)
     {
@@ -46,13 +46,13 @@ public class Parser
         readingType = ReadingType.FirstAttempt;
         iterator = 0;
 
-        logger.debug("was initialized with expression: ", expression);
+        logger.debug(String.format("was initialized with expression: %s", expression));
     }
 
     @SuppressWarnings("rawtypes")
     public List<Token> parse() throws ArithmeticParsingErrorException
     {
-        logger.debug("start parsing expression: ", expression);
+        logger.debug(String.format("start parsing expression: %s", expression));
 
         try {
             for (;iterator < expression.length();iterator++)
@@ -86,7 +86,7 @@ public class Parser
             }
 
             addNextToken(); // currently reading
-            logger.debug("successful parsed expression: ", expression);
+            logger.debug(String.format("successful parsed expression: %s", expression));
         }
         catch(ArithmeticParsingErrorException e)
         {

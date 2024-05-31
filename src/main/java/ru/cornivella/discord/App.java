@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import ru.cornivella.discord.math.ArithmeticErrorException;
 import ru.cornivella.discord.math.Parser;
+import ru.cornivella.discord.math.TokenTree;
 
 public class App {
     public static void main(String[] args) throws IOException, InterruptedException, ArithmeticErrorException {
@@ -21,6 +22,6 @@ public class App {
         //         .addOption(OptionType.STRING, "expression", "You can use numbers, + - * / with ( )!", true)
         // );
 
-        System.out.println(new Parser("(2 + 2 / 2) *- 3 ^ 2! * Pi * cos(3) * -1.12").parse());
+        new TokenTree(new Parser("2 (3 * (5 - 4) / 6)").parse()).build();
     }
 }
