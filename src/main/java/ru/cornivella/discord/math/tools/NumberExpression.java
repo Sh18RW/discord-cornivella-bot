@@ -15,4 +15,9 @@ public class NumberExpression extends Expression {
     public String toString() {
         return String.format("[NumberExpression %s]", numberToken.toString());
     }
+
+    @Override
+    public boolean isWhole() {
+        return true;
+    }
 }

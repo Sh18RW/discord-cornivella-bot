@@ -22,9 +22,9 @@ public class App {
         //     Commands.slash("solve", "Solve simple math expression")
         //         .addOption(OptionType.STRING, "expression", "You can use numbers, + - * / with ( )!", true)
         // );
-        TokenTree tokenTree = new TokenTree(new Parser("2 + (2 + 2) / (2 ^ 2)").parse());
+        TokenTree tokenTree = new TokenTree(new Parser("2 + 2 * 2").parse());
         tokenTree.build();
         Solver solver = new Solver(tokenTree);
-        System.out.println(solver.getResult());
+        System.out.println(String.format("%.4f", solver.getResult()));
     }
 }

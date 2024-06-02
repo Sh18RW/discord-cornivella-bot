@@ -22,17 +22,20 @@ public class Solver {
     }
 
     private double getExpressionValue(Expression expression) throws ArithmeticErrorException {
+        double result = 0;
         if (expression instanceof FunctionExpression) {
-            return getFunctionValue((FunctionExpression) expression);
+            result = getFunctionValue((FunctionExpression) expression);
         } else if (expression instanceof ConstantExpression) {
-            return getConstantValue((ConstantExpression) expression);
+            result = getConstantValue((ConstantExpression) expression);
         } else if (expression instanceof NumberExpression) {
-            return ((NumberExpression) expression).getNumberToken().getValue();
+            result = ((NumberExpression) expression).getNumberToken().getValue();
         } else if (expression instanceof OperationExpression) {
-            return getOperationValue((OperationExpression) expression);
+            result = getOperationValue((OperationExpression) expression);
+        } else {
+            throw new ArithmeticErrorException(String.format("Can't get %s expression value.", expression));
         }
 
-        throw new ArithmeticErrorException(String.format("Can't get %s expression value.", expression));
+        return result * (expression.isNegative() ? -1 : 1);
     }
 
     private double getOperationValue(OperationExpression operationExpression) throws ArithmeticErrorException {
@@ -115,7 +118,7 @@ public class Solver {
 
         while (count > 0) {
             if (argument == null) {
-                throw new ArithmeticErrorException(String.format("You missed the argument in function at ",
+                throw new ArithmeticErrorException(String.format("You missed the argument in function at %d",
                 functionExpression.getFunctionToken().getTracer()));
             }
             double value;
