@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import ru.cornivella.discord.math.ArithmeticErrorException;
 import ru.cornivella.discord.math.Parser;
+import ru.cornivella.discord.math.Solver;
 import ru.cornivella.discord.math.TokenTree;
 
 public class App {
@@ -21,7 +22,9 @@ public class App {
         //     Commands.slash("solve", "Solve simple math expression")
         //         .addOption(OptionType.STRING, "expression", "You can use numbers, + - * / with ( )!", true)
         // );
-
-        new TokenTree(new Parser("2 (3 * (5 - 4) / 6)").parse()).build();
+        TokenTree tokenTree = new TokenTree(new Parser("2 + (2 + 2) / (2 ^ 2)").parse());
+        tokenTree.build();
+        Solver solver = new Solver(tokenTree);
+        System.out.println(solver.getResult());
     }
 }

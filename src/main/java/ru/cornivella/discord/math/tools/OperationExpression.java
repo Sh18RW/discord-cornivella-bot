@@ -29,6 +29,8 @@ public class OperationExpression extends Expression{
         return operatorToken;
     }
 
+    
+
     @Override
     public String toString() {
         if (operatorToken.getValue() != OperationType.Factorial) {

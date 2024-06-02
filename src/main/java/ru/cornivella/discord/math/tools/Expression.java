@@ -7,4 +7,12 @@ public abstract class Expression {
     {
         isNegative = !isNegative;
     }
+
+    public boolean isNegative() {
+        return isNegative;
+    }
+
+    public void setNegative(boolean isNegative) {
+        this.isNegative = isNegative;
+    }
 }
